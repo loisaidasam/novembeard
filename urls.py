@@ -4,7 +4,8 @@ from django.conf.urls.defaults import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+	('', direct_to_template, {'template': 'placeholder.html'}),
     # Examples:
     # url(r'^$', 'novembeard.views.home', name='home'),
     # url(r'^novembeard/', include('novembeard.foo.urls')),
