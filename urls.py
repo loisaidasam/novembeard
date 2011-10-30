@@ -5,15 +5,8 @@ from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('web.views',
-	(r'^register$', 'register'),
-#	(r'^polls/$', 'index'),
-#	(r'^polls/(?P<poll_id>\d+)/$', 'detail'),
-#	(r'^polls/(?P<poll_id>\d+)/results/$', 'results'),
-#	(r'^polls/(?P<poll_id>\d+)/vote/$', 'vote'),
-)
 
-urlpatterns += patterns('',
+urlpatterns = patterns('',
 	# Examples:
 	# url(r'^$', 'novembeard.views.home', name='home'),
 	# url(r'^novembeard/', include('novembeard.foo.urls')),
@@ -28,5 +21,17 @@ urlpatterns += patterns('',
 	url(r'^social/', include('socialregistration.urls', namespace='socialregistration')),
 	
 	# Catchall for now...
-	('^', direct_to_template, {'template': 'placeholder.html'}),
+#	('^', direct_to_template, {'template': 'placeholder.html'}),
+)
+
+urlpatterns += patterns('web.views',
+	url(r'^register', 'register', name='register'),
+	url(r'^login', 'login', name='login'),
+	url(r'^logout', 'logout', name='logout'),
+	url(r'^$', 'index', name='index'),
+	
+#	(r'^polls/$', 'index'),
+#	(r'^polls/(?P<poll_id>\d+)/$', 'detail'),
+#	(r'^polls/(?P<poll_id>\d+)/results/$', 'results'),
+#	(r'^polls/(?P<poll_id>\d+)/vote/$', 'vote'),
 )

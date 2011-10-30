@@ -26,21 +26,32 @@ TUMBLR_CONSUMER_KEY = ''
 TUMBLR_CONSUMER_SECRET_KEY = ''
 
 
-'''
-:param request: The current request object
-:param user: The unsaved user object
-:param profile: The unsaved profile object
-:param client: The API client
-'''
-def social_initial_data(request, user, profile, client):
-	print request, user, profile, client
+#def social_initial_data(request, user, profile, client):
+#	'''
+#	:param request: The current request object
+#	:param user: The unsaved user object
+#	:param profile: The unsaved profile object
+#	:param client: The API client
+#	'''
+#	print "social_initial_data", request, user, profile, client
 
-def social_generate_username():
-	return 'foo'
+
+def social_generate_username(user, profile, client):
+	'''
+	:param user: The unsaved user object
+	:param profile: The unsaved profile object
+	:param client: The API client
+	'''
+	print "social_generate_username"
+	print "user:", user
+	print "profile:", profile
+	print "client:", client
+	return 'foo27'
+
 
 SOCIALREGISTRATION_USE_HTTPS = False
 SOCIALREGISTRATION_GENERATE_USERNAME = True
-SOCIALREGISTRATION_GENERATE_USERNAME_FUNCTION = social_generate_username
-SOCIALREGISTRATION_INITIAL_DATA_FUNCTION = social_initial_data
+SOCIALREGISTRATION_GENERATE_USERNAME_FUNCTION = 'socialregistration.settings.social_generate_username'
+#SOCIALREGISTRATION_INITIAL_DATA_FUNCTION = 'socialregistration.settings.social_initial_data'
 
 LOGIN_REDIRECT_URL = '/'

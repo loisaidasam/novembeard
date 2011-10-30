@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Novembeard - the only month that matters!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Beardgrowers worldwide unite for the month of NOVEMBER!" />
+		<meta name="keywords" content="Novembeard, November, beard, moustache, grizzly, grow, stache, mo, Mustache March, growing beards, beard trimming, shaving, Movember, No Shave November" />
+		{% if ga_account %}<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', '{{ ga_account }}']);
+			_gaq.push(['_trackPageview']);
+		
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>{% endif %}
+		<link rel="stylesheet" type="text/css" media="all" href="/static/css/style.css" />
+	</head>
+	<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+		<!-- HEADER -->
+		<a href="/"><img src="/static/images/header.gif" width="800" height="127" alt="" border="0"></a><br />
+		<table border="0" cellpadding="8" cellspacing="0" width="700">
+			<tr>
+				<td align="left">
+					Welcome {% if user.is_authenticated %}<b>{{ profile.nickname }}</b>{% else %}Stranger{% endif %}!
+				</td>
+				<td align="right">
+					{% if user.is_authenticated %}
+					<a href="/photo/add">Upload a Photo</a> | <a href="/profile/{{ profile.vanity }}">View My Profile</a> | <a href="/profile">Edit My Profile</a> | <a href="/logout">Logout</a>
+					{% else %}
+					<a href="/login">Log In</a> | <a href="/register">Register</a>
+					{% endif %}					
+				</td>
+			</tr>
+		</table>
+		<!-- /HEADER -->
+
+		<!-- CONTENT -->
+		{% block content %}{% endblock %}
+		<!-- CONTENT -->
+	</body>
+<html>
+			
