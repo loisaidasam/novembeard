@@ -145,4 +145,6 @@ LOGGING = {
 	}
 }
 
+GA_ACCOUNT = None
+
 from localsettings import *
