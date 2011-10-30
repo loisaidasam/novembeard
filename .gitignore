@@ -2,3 +2,4 @@
 .pydevproject
 *.pyc
 *.pid
+localsettings.py
