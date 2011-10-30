@@ -1,10 +1,9 @@
 <html>
 <head>
 <title>Novembeard - the only month that matters!</title>
-<script type="text/javascript">
-
+{% if ga_account %}<script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-26645967-1']);
+  _gaq.push(['_setAccount', '{% ga_account %}']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -12,8 +11,7 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
-</script>
+</script>{% endif %}
 </head>
 <body>
 <br />
