@@ -1,0 +1,10 @@
+body,td,th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666666;
+}
+    
+a:link {text-decoration: none; color: #FF8500;}
+a:visited {text-decoration: none; color: #FF8500;}
+a:active {text-decoration: none; color: #FF8500;}
+a:hover {text-decoration: none; color: #666666;}
