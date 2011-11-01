@@ -14,7 +14,8 @@ from web.models import Profile
 def index(request):
 	user = request.user
 	c = {
-		'user': user
+		'user': user,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	if user.is_authenticated():
@@ -50,6 +51,7 @@ def register(request):
 	
 	c = {
 		'form': form,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	return render_to_response(
@@ -88,6 +90,7 @@ def login(request):
 	
 	c = {
 		'form': form,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	return render_to_response('login.html', c,
@@ -107,7 +110,8 @@ def logout(request):
 def profile_edit(request):
 	user = request.user
 	c = {
-		'user': user
+		'user': user,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	if user.is_authenticated():
@@ -120,7 +124,8 @@ def profile_edit(request):
 def profile_view(request, profile_id):
 	user = request.user
 	c = {
-		'user': user
+		'user': user,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	if user.is_authenticated():
@@ -133,7 +138,8 @@ def profile_view(request, profile_id):
 def photo_view(request, profile_id, day):
 	user = request.user
 	c = {
-		'user': user
+		'user': user,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	if user.is_authenticated():
@@ -146,7 +152,8 @@ def photo_view(request, profile_id, day):
 def photo_add(request):
 	user = request.user
 	c = {
-		'user': user
+		'user': user,
+		'ga_account': settings.GA_ACCOUNT,
 	}
 	
 	if user.is_authenticated():
