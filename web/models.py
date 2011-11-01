@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, primary_key = True)
-	vanity = models.CharField(max_length=16)
-	nickname = models.CharField(max_length=255)
-	bio = models.CharField(max_length=255)
+	vanity = models.CharField(max_length=16, blank=True, null=True)
+	nickname = models.CharField(max_length=255, blank=True, null=True)
+	bio = models.CharField(max_length=255, blank=True, null=True)
 	
 	def __unicode__(self):
 		return '%s (nick: %s)' % (self.user, self.nickname)

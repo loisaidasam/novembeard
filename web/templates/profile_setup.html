@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<b>Social profile connected!</b><br /><br />
+
+Now please fill out a few more details so we can set you up:<br /><br />
+{% if error %}
+	<p>{{ error }}</p>
+{% else %}
+	<form action="/social/setup/" method="post">
+	    <table>
+	        {{ user_form }}
+	    </table>
+	    {% csrf_token %}
+	    <br />
+	    <input type="submit" value="Beard me up!" />
+	</form>
+{% endif %}
+{% endblock %}

@@ -1,23 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-		<table border="0" cellpadding="8" cellspacing="0">
-		    <tr>
-		        <td align="left">
-					<b>Welcome to Novembeard 2011!</b><br />
-					Over the course of the coming month of November, several brave souls will forgo social norms and facial comfort in an effort to exhibit their inner grizzliness.<br />
-					Watch here for daily updates, beard ratings, and demeaning commentary - or better yet <a href="/register">register and join them</a>!<br /><br />
-					<table>
-						<tr>
-							<td valign="middle">
-								<a href="http://twitter.com/novembeard_" target="_blank"><img src="/static/images/twitter_bird.gif" alt="Tweet! Tweet!" border="0" /></a>
-							</td>
-							<td valign="middle">
-								<a href="http://www.facebook.com/group.php?gid=162933662879" target="_blank"><img src="/static/images/facebook.gif" alt="Whatup Zuck?!" border="0" /></a>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+<b>Welcome to Novembeard 2011!</b><br />
+Over the course of the coming month of November, several brave souls will forgo social norms and facial comfort in an effort to exhibit their inner grizzliness.<br />
+Watch here for daily updates, beard ratings, and demeaning commentary{% if not user.is_authenticated %} - or better yet <a href="/register">register and join them</a>{% endif %}!<br /><br />
 {% endblock content %}

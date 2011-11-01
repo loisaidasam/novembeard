@@ -1,0 +1,31 @@
+Novembeard notes
+
+Many images taken from previous Novembeard, a Zend Framework PHP app that lived at http://novembeard.kargo.com
+
+Some original novembeard settings (for reference, most of these changed by now):
+app.developermode = 0
+app.send_emails = 1
+app.admin.email = "novembeard@kargo.com"
+app.admin.name = "Novembeard Staff"
+app.twitter.enabled = 1
+app.thumb.size = 140
+app.thumb.watermark = 1
+app.photo.width = 700
+app.profile.photo.width = 310
+app.date.year = 2009
+app.date.month = 11
+app.namespace = "Novembeard"
+app.tagline = "Novembeard - The Only Month That Matters"
+app.meta.description = "Beardgrowers worldwide unite for the month of NOVEMBER!"
+app.meta.keywords = "Novembeard, November, beard, moustache, grizzly, grow, stache, mo, Mustache March, growing beards, beard trimming, shaving, Kargo"
+
+twitter.username = "novembeard_"
+twitter.password = "krg.novembeard"
+twitter.message.update = "New #Novembeard photo uploaded by {USER}! Check it out at: http://{WEBHOST}/photo/view/id/{PHOTOID}"
+
+
+
+favicon.ico created from this:
+http://payload.cargocollective.com/1/2/86985/headerimg/Beard-Icon.png
+via this: 
+http://mr-connor.com/

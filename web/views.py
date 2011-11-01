@@ -10,10 +10,10 @@ from django.template import RequestContext
 from socialregistration.contrib.facebook.models import FacebookProfile
 from socialregistration.contrib.twitter.models import TwitterProfile
 
+from web.forms import UserForm
+
 
 def index(request):
-#	print settings.STATIC_ROOT
-	
 	user = request.user
 	c = {
 		'user': user
@@ -30,11 +30,14 @@ def register(request):
 	if user.is_authenticated():
 		return redirect('index')
 	
+	c = {
+		'user_form': UserForm, 
+	}
+	
 	return render_to_response(
-		'register.html', dict(
-			facebook=FacebookProfile.objects.all(),
-			twitter=TwitterProfile.objects.all(),
-	), context_instance=RequestContext(request))
+		'register.html', c,
+		context_instance=RequestContext(request)
+	)
 
 
 def login(request):
@@ -55,7 +58,9 @@ def login(request):
 			return redirect('index')
 	
 	c = {}
-	return render_to_response('login.html', c)
+	return render_to_response('login.html', c,
+		context_instance=RequestContext(request)
+	)
 
 
 def logout(request):
@@ -64,3 +69,27 @@ def logout(request):
 		auth_logout(request)
 	
 	return redirect('index')
+
+
+@login_required
+def profile_edit(request):
+	c = {}
+	return render_to_response('profile_edit.html', c)
+
+
+@login_required
+def profile_view(request, profile_id):
+	c = {}
+	return render_to_response('profile_view.html', c)
+
+
+@login_required
+def photo_view(request, profile_id, day):
+	c = {}
+	return render_to_response('photo_view.html', c)
+
+
+@login_required
+def photo_add(request, profile_id):
+	c = {}
+	return render_to_response('photo_add.html', c)

@@ -1,1 +1,24 @@
-login.html
+{% extends "base.html" %}
+
+{% block content %}
+{% load facebook twitter %}
+{% facebook_button %} {% twitter_button %}<br /><br />
+
+...OR login straight up: <br /><br />
+{% if login_error %}
+<font color="#FF0000">{{ login_error }}</font>
+{% endif %}
+<form action="/login" method="post">
+<table>
+	<tr>
+		<td>Email:</td>
+		<td><input type="text" name="email" /></td>
+	</tr>
+	<tr>
+		<td>Password:</td>
+		<td><input type="password" name="email" /></td>
+	</tr>
+</table><br />
+<input type="submit" value="Beard me up!" />
+</form>
+{% endblock content %}
