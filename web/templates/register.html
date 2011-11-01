@@ -1,18 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load facebook twitter %}
-{% facebook_button %} {% twitter_button %}<br /><br />
-
-...OR register straight up: <br /><br />
-{% if register_error %}
-<font color="#FF0000">{{ register_error }}</font>
+Register: <br /><br />
+{% if form.errors %}
+<font color="#FF0000">{{ form.errors }}</font>
 {% endif %}
-	<form action="." method="post">
-	    <table>
-	        {{ user_form }}
-	    </table>
+	<form action="/register/" method="post">
 	    {% csrf_token %}
+	    <table>
+	    {{ form }}
+	    </table><br />
 	    <input type="submit" value="Beard me up!" />
 	</form>
 {% endblock content %}

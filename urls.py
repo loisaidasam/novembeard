@@ -20,27 +20,22 @@ urlpatterns = patterns('',
 	# Uncomment the next line to enable the admin:
 	url(r'^admin/', include(admin.site.urls)),
 	
-	# Social Registration
-	url(r'^social/', include('socialregistration.urls', namespace='socialregistration')),
-	
 	# Catchall for now...
 #	('^', direct_to_template, {'template': 'placeholder.html'}),
 )
 
 urlpatterns += patterns('web.views',
+	# General
 	url(r'^$', 'index', name='index'),
-	url(r'^register', 'register', name='register'),
-	url(r'^login', 'login', name='login'),
-	url(r'^logout', 'logout', name='logout'),
+	url(r'^register/$', 'register', name='register'),
+	url(r'^login/$', 'login', name='login'),
+	url(r'^logout/$', 'logout', name='logout'),
 	
-	url(r'^profile$', 'profile_edit', name='profile_edit'),
-	url(r'^profile/(?P<profile>\w+)', 'profile_view', name='profile_view'),
-	url(r'^profile/(?P<profile>\w+)/day/(?P<day>\d+)', 'photo_view', name='photo_view'),
+	# Profile
+	url(r'^profile/$', 'profile_edit', name='profile_edit'),
+	url(r'^profile/(?P<profile_id>\w+)/$', 'profile_view', name='profile_view'),
 	
-	url(r'^photo$', 'photo_add', name='photo_add'),
-	
-#	(r'^polls/$', 'index'),
-#	(r'^polls/(?P<poll_id>\d+)/$', 'detail'),
-#	(r'^polls/(?P<poll_id>\d+)/results/$', 'results'),
-#	(r'^polls/(?P<poll_id>\d+)/vote/$', 'vote'),
+	# Photo
+	url(r'^profile/(?P<profile_id>\w+)/day/(?P<day>\d+)/$', 'photo_view', name='photo_view'),
+	url(r'^photo/$', 'photo_add', name='photo_add'),
 )

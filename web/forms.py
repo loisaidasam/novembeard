@@ -5,6 +5,25 @@ from django.contrib.auth.models import User
 
 from web.models import Profile
 
+class RegisterForm(forms.Form):
+	nickname = forms.CharField(max_length=255, required=False, help_text="(ie: Sammy Sandybeard)")
+	email = forms.EmailField()
+	password = forms.CharField(max_length=128, widget=forms.PasswordInput)
+	
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+		try:
+			user = User.objects.get(email=email)
+		except User.DoesNotExist:
+			return email
+		else:
+			raise forms.ValidationError(_('This email is already in use in the system.'))
+
+class LoginForm(forms.Form):
+	email = forms.EmailField()
+	password = forms.CharField(max_length=128, widget=forms.PasswordInput)
+	
+
 class UserForm(forms.Form):
 	"""
 	User creation form - for `SOCIALREGISTRATION_SETUP_FORM` setting.

@@ -3,15 +3,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
-from socialregistration.contrib.facebook.models import FacebookProfile
-from socialregistration.contrib.twitter.models import TwitterProfile
-
-from web.forms import UserForm
-
+from web.forms import LoginForm, RegisterForm
+from web.models import Profile
 
 def index(request):
 	user = request.user
@@ -30,8 +28,28 @@ def register(request):
 	if user.is_authenticated():
 		return redirect('index')
 	
+	if request.method == 'POST':
+		form = RegisterForm(request.POST)
+		if form.is_valid():
+			nickname = form.cleaned_data.get('nickname')
+			email = form.cleaned_data.get('email')
+			password = form.cleaned_data.get('password')
+			
+			user = User(email=email, username=email)
+			user.set_password(password)
+			user.save()
+			
+			profile = Profile(user=user, nickname=nickname)
+			profile.save()
+			
+#			user = authenticate(username=email, password=password)
+			auth_login(request, user)
+			return redirect('index')
+	else:
+		form = RegisterForm() # An unbound form
+	
 	c = {
-		'user_form': UserForm, 
+		'form': form,
 	}
 	
 	return render_to_response(
@@ -45,19 +63,33 @@ def login(request):
 	if user.is_authenticated():
 		return redirect('index')
 	
-	username = request.POST.get('username')
-	password = request.POST.get('password')
-	user = authenticate(username=username, password=password)
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data.get('email')
+			password = form.cleaned_data.get('password')
+			
+			user = authenticate(username=email, password=password)
+			
+			# TODO: say "auth failed"
+			if user is None:
+				pass
+			
+			else:
+				# TODO: say "user isn't active"
+				if not user.is_active:
+					pass
+				
+				else:
+					auth_login(request, user)
+					return redirect('index')
+	else:
+		form = LoginForm() # An unbound form
 	
-	if user is not None:
-		# TODO: write some functionality for when users are not active
-		if not user.is_active:
-			pass
-		else:
-			auth_login(request, user)
-			return redirect('index')
+	c = {
+		'form': form,
+	}
 	
-	c = {}
 	return render_to_response('login.html', c,
 		context_instance=RequestContext(request)
 	)
@@ -73,23 +105,51 @@ def logout(request):
 
 @login_required
 def profile_edit(request):
-	c = {}
+	user = request.user
+	c = {
+		'user': user
+	}
+	
+	if user.is_authenticated():
+		c['profile'] = user.get_profile()
+	
 	return render_to_response('profile_edit.html', c)
 
 
 @login_required
 def profile_view(request, profile_id):
-	c = {}
+	user = request.user
+	c = {
+		'user': user
+	}
+	
+	if user.is_authenticated():
+		c['profile'] = user.get_profile()
+	
 	return render_to_response('profile_view.html', c)
 
 
 @login_required
 def photo_view(request, profile_id, day):
-	c = {}
+	user = request.user
+	c = {
+		'user': user
+	}
+	
+	if user.is_authenticated():
+		c['profile'] = user.get_profile()
+	
 	return render_to_response('photo_view.html', c)
 
 
 @login_required
-def photo_add(request, profile_id):
-	c = {}
+def photo_add(request):
+	user = request.user
+	c = {
+		'user': user
+	}
+	
+	if user.is_authenticated():
+		c['profile'] = user.get_profile()
+	
 	return render_to_response('photo_add.html', c)

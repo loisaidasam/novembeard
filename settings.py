@@ -86,13 +86,6 @@ TEMPLATE_LOADERS = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-#    'socialregistration.contrib.openid.auth.OpenIDAuth',
-    'socialregistration.contrib.twitter.auth.TwitterAuth',
-#    'socialregistration.contrib.linkedin.auth.LinkedInAuth',
-#    'socialregistration.contrib.github.auth.GithubAuth',
-    'socialregistration.contrib.facebook.auth.FacebookAuth',
-#    'socialregistration.contrib.foursquare.auth.FoursquareAuth',
-#    'socialregistration.contrib.tumblr.auth.TumblrAuth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,7 +94,6 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
-    'socialregistration.contrib.facebook.middleware.FacebookMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -134,16 +126,6 @@ INSTALLED_APPS = (
 	'django.contrib.admin',
 	# Uncomment the next line to enable admin documentation:
 	# 'django.contrib.admindocs',
-	
-    'socialregistration',
-#    'socialregistration.contrib.openid',
-    'socialregistration.contrib.twitter',
-#    'socialregistration.contrib.linkedin',
-#    'socialregistration.contrib.github',
-    'socialregistration.contrib.facebook',
-#    'socialregistration.contrib.foursquare',
-#    'socialregistration.contrib.tumblr',
-    
 	'web',
 )
 
@@ -173,7 +155,5 @@ LOGGING = {
 }
 
 GA_ACCOUNT = None
-
-from socialregistration.settings import *
 
 from localsettings import *
