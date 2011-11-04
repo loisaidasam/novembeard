@@ -203,27 +203,22 @@ def photo_add(request):
 	if request.method == 'POST':
 		form = PhotoForm(request.POST, request.FILES)
 		if form.is_valid():
+			day = form.cleaned_data.get('day')
+			caption = form.cleaned_data.get('caption')
+			
+			handle_uploaded_file(request.FILES['photo'], user.id, day)
+			
 			try:
-				day = form.cleaned_data.get('day')
-				caption = form.cleaned_data.get('caption')
-				
-				handle_uploaded_file(request.FILES['photo'], user.id, day)
-				
-				try:
-					photo = Photo.objects.get(user=user, day=day)
-				except Photo.DoesNotExist:
-					photo = Photo(
-						user=user,
-						day=day,
-					)
-				photo.caption = caption
-				photo.save()
-				
-				return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
-			except Exception, e:
-				# TODO: report photo uploading problem
-				print "Exception: %s" % e
-				pass
+				photo = Photo.objects.get(user=user, day=day)
+			except Photo.DoesNotExist:
+				photo = Photo(
+					user=user,
+					day=day,
+				)
+			photo.caption = caption
+			photo.save()
+			
+			return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
 	else:
 		today = datetime.date.today()
 		form = PhotoForm(initial={'day': today.day})
