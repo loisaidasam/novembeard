@@ -24,7 +24,9 @@ def index(request):
 	if user.is_authenticated():
 		c['profile'] = user.get_profile()
 	
-	c['photos'] = Photo.objects.all().order_by('-published')[:10] 
+	c['photos'] = Photo.objects.all().order_by('-published')[:10]
+	
+	c['profiles'] = Profile.objects.all() 
 	
 	return render_to_response('index.html', c)
 
