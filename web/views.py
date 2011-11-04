@@ -51,7 +51,7 @@ def register(request):
 			profile.save()
 			
 #			user = authenticate(username=email, password=password)
-			auth_login(request, user)
+#			auth_login(request, user)
 			return redirect('index')
 	else:
 		form = RegisterForm() # An unbound form
