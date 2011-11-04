@@ -7,4 +7,4 @@ media/beards/hi-res/*.jpg
 media/beards/web/*.jpg
 media/beards/thumb/*.jpg
 static/*
-
+.DS_Store
