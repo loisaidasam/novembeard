@@ -1,3 +1,6 @@
+import datetime
+from PIL import Image
+
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -8,8 +11,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
-from web.forms import LoginForm, RegisterForm
-from web.models import Profile
+from web.forms import LoginForm, RegisterForm, PhotoForm
+from web.models import Profile, Photo
 
 def index(request):
 	user = request.user
@@ -20,6 +23,10 @@ def index(request):
 	
 	if user.is_authenticated():
 		c['profile'] = user.get_profile()
+	
+	c['photos'] = Photo.objects.all().order_by('-published')[:10]
+	
+	c['profiles'] = Profile.objects.all() 
 	
 	return render_to_response('index.html', c)
 
@@ -145,7 +152,44 @@ def photo_view(request, profile_id, day):
 	if user.is_authenticated():
 		c['profile'] = user.get_profile()
 	
+	try:
+		try:
+			photo_profile = Profile.objects.get(pk = profile_id)
+			photo_user = User.objects.get(pk = photo_profile.user.id)
+		except Profile.DoesNotExist:
+			return redirect('index')
+		except User.DoesNotExist:
+			return redirect('index')
+		
+		photo = Photo.objects.get(user=photo_user, day=day)
+	except Photo.DoesNotExist:
+		return redirect('index')
+	
+	photo.views += 1
+	photo.save()
+	
+	c['photo'] = photo
+	c['photo_profile'] = photo_profile
+	c['day'] = day
+	
 	return render_to_response('photo_view.html', c)
+
+
+def handle_uploaded_file(f, user_id, day):
+	accepted = ('image/jpg', 'image/jpeg')
+	if f.content_type not in accepted:
+		raise Exception("Invalid content type - only jpg files are accepted for uploading at this time")
+	
+	filename = 'media/beards/hi-res/%s_%s.jpg' % (user_id, day)
+	destination = open(filename, 'wb+')
+	for chunk in f.chunks():
+		destination.write(chunk)
+	destination.close()
+	
+	for folder, size in settings.IMAGE_SIZES.iteritems():
+		im = Image.open(filename)
+		im.thumbnail(size, Image.ANTIALIAS)
+		im.save('media/beards/%s/%s_%s.jpg' % (folder, user_id, day))
 
 
 @login_required
@@ -155,8 +199,39 @@ def photo_add(request):
 		'user': user,
 		'ga_account': settings.GA_ACCOUNT,
 	}
-	
 	if user.is_authenticated():
 		c['profile'] = user.get_profile()
 	
-	return render_to_response('photo_add.html', c)
+	if request.method == 'POST':
+		form = PhotoForm(request.POST, request.FILES)
+		if form.is_valid():
+			try:
+				day = form.cleaned_data.get('day')
+				caption = form.cleaned_data.get('caption')
+				
+				handle_uploaded_file(request.FILES['photo'], user.id, day)
+				
+				try:
+					photo = Photo.objects.get(user=user, day=day)
+				except Photo.DoesNotExist:
+					photo = Photo(
+						user=user,
+						day=day,
+					)
+				photo.caption = caption
+				photo.save()
+				
+				return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
+			except Exception, e:
+				# TODO: report photo uploading problem
+				print "Exception: %s" % e
+				pass
+	else:
+		today = datetime.date.today()
+		form = PhotoForm(initial={'day': today.day})
+	
+	c['form'] = form
+	
+	return render_to_response('photo_add.html', c,
+		context_instance=RequestContext(request)
+	)

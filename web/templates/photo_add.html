@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-Coming soon...
+Photo Upload:<br /><br />
+{% if form.errors %}
+<font color="#FF0000">{{ form.errors }}</font>
+{% endif %}
+<form action="/photo/" method="post" enctype="multipart/form-data">
+<table>
+    {% csrf_token %}
+    {{ form }}
+</table><br />
+<input type="submit" value="Beard me up!" />
+</form>
 {% endblock content %}
