@@ -1,5 +1,8 @@
 import datetime
 from PIL import Image
+import logging
+
+logger = logging.getLogger(__name__)
 
 from django.conf import settings
 from django.contrib.auth import authenticate
@@ -203,22 +206,25 @@ def photo_add(request):
 	if request.method == 'POST':
 		form = PhotoForm(request.POST, request.FILES)
 		if form.is_valid():
-			day = form.cleaned_data.get('day')
-			caption = form.cleaned_data.get('caption')
-			
-			handle_uploaded_file(request.FILES['photo'], user.id, day)
-			
 			try:
-				photo = Photo.objects.get(user=user, day=day)
-			except Photo.DoesNotExist:
-				photo = Photo(
-					user=user,
-					day=day,
-				)
-			photo.caption = caption
-			photo.save()
-			
-			return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
+				day = form.cleaned_data.get('day')
+				caption = form.cleaned_data.get('caption')
+				
+				handle_uploaded_file(request.FILES['photo'], user.id, day)
+				
+				try:
+					photo = Photo.objects.get(user=user, day=day)
+				except Photo.DoesNotExist:
+					photo = Photo(
+						user=user,
+						day=day,
+					)
+				photo.caption = caption
+				photo.save()
+				
+				return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
+			except Exception, e:
+				logger.error("Exception when uploading a picture: %s" % e)
 	else:
 		today = datetime.date.today()
 		form = PhotoForm(initial={'day': today.day})
