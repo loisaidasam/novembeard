@@ -180,7 +180,7 @@ def handle_uploaded_file(f, user_id, day):
 	if f.content_type not in accepted:
 		raise Exception("Invalid content type - only jpg files are accepted for uploading at this time")
 	
-	filename = 'media/beards/hi-res/%s_%s.jpg' % (user_id, day)
+	filename = '%s/beards/hi-res/%s_%s.jpg' % (settings.MEDIA_ROOT, user_id, day)
 	destination = open(filename, 'wb+')
 	for chunk in f.chunks():
 		destination.write(chunk)
@@ -189,7 +189,7 @@ def handle_uploaded_file(f, user_id, day):
 	for folder, size in settings.IMAGE_SIZES.iteritems():
 		im = Image.open(filename)
 		im.thumbnail(size, Image.ANTIALIAS)
-		im.save('media/beards/%s/%s_%s.jpg' % (folder, user_id, day))
+		im.save('%s/beards/%s/%s_%s.jpg' % (settings.MEDIA_ROOT, folder, user_id, day))
 
 
 @login_required
