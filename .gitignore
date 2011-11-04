@@ -3,8 +3,8 @@
 *.pyc
 *.pid
 localsettings.py
-media/beards/hi-res/*
-media/beards/web/*
-media/beards/thumb/*
+media/beards/hi-res/*.jpg
+media/beards/web/*.jpg
+media/beards/thumb/*.jpg
 static/*
 
