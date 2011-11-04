@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 
@@ -39,3 +40,14 @@ urlpatterns += patterns('web.views',
 	url(r'^profile/(?P<profile_id>\w+)/day/(?P<day>\d+)/$', 'photo_view', name='photo_view'),
 	url(r'^photo/$', 'photo_add', name='photo_add'),
 )
+
+# STATIC and MEDIA files
+if settings.DEBUG:
+	urlpatterns += patterns('',
+		url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+			'document_root': settings.STATIC_ROOT,
+		}),
+		url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+			'document_root': settings.MEDIA_ROOT,
+		}),
+   )

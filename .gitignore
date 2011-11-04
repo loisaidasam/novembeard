@@ -3,3 +3,6 @@
 *.pyc
 *.pid
 localsettings.py
+media/*.jpg
+static/*
+
