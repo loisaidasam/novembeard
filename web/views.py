@@ -127,7 +127,6 @@ def profile_edit(request):
 	return render_to_response('profile_edit.html', c)
 
 
-@login_required
 def profile_view(request, profile_id):
 	user = request.user
 	c = {
@@ -141,7 +140,6 @@ def profile_view(request, profile_id):
 	return render_to_response('profile_view.html', c)
 
 
-@login_required
 def photo_view(request, profile_id, day):
 	user = request.user
 	c = {
