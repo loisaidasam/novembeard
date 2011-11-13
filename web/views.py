@@ -131,10 +131,14 @@ def profile_edit(request):
 
 
 def profile_view(request, profile_id):
+	view_profile = Profile.objects.get(pk = profile_id)
+	
 	user = request.user
 	c = {
 		'user': user,
 		'ga_account': settings.GA_ACCOUNT,
+		'view_profile': view_profile,
+		'photos': view_profile.user.photo_set.all().order_by("-day"),
 	}
 	
 	if user.is_authenticated():

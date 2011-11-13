@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-Coming soon...
+<b>Profile of {{ view_profile.nickname }}</b>:<br /><br />
+<b>Bio</b>:<br />
+Coming soon...<br /><br />
+<b>Photos</b>:<br/> 
+{% for photo in photos %}<a href="/profile/{{ photo.user.id }}/day/{{ photo.day }}/"><img src="/media/beards/thumb/{{ photo.user.id }}_{{ photo.day }}.jpg" alt="Day {{ photo.day }}" border="0" /></a>&nbsp;&nbsp;{% endfor %}
 {% endblock content %}
