@@ -3,7 +3,7 @@
 {% block content %}
 <table>
 <tr>
-	<td align="left">{{ photo_profile.nickname }} on day {{ day }}</td>
+	<td align="left"><a href="/profile/{{ photo_profile.user.id }}/">{{ photo_profile.nickname }}</a> on day {{ day }}</td>
 	<td align="right"><i>{{ photo.views }} views</i></td>
 </tr>
 <tr>

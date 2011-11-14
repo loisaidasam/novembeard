@@ -16,7 +16,7 @@ Image uploading now works! Pardon the delay, but now we're rolling! Tell your fr
 		<a href="/profile/{{ photo.user.id }}/day/{{ photo.day }}/"><img src="/media/beards/thumb/{{ photo.user.id }}_{{ photo.day }}.jpg" alt="Day {{ photo.day }}" border="0" /></a>
 	</td>
 	<td>
-		{{ photo.user.profile.nickname }} on day {{ photo.day }} - <i>{{ photo.published }}</i>
+		<a href="/profile/{{ photo.user.id }}/">{{ photo.user.profile.nickname }}</a> on day {{ photo.day }} - <i>{{ photo.published }}</i>
 	</td>
 </tr> 
 {% endfor %}
