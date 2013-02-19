@@ -5,7 +5,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-	('Sam Sandberg', 'sam.sandberg+novembeard@gmail.com'),
+	('Your Name', 'youremail@example.com'),
 )
 
 MANAGERS = ADMINS
@@ -94,6 +94,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
+	'middleware.blockedip.BlockedIpMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -164,5 +165,8 @@ IMAGE_SIZES = {
 	'thumb': (140, 140),
 	'web': (720, 440),
 }
+
+BLOCKED_IPS = []
+
 
 from localsettings import *
