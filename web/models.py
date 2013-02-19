@@ -24,10 +24,8 @@ class Photo(models.Model):
 	user = models.ForeignKey(User)
 	day = models.IntegerField()
 	caption = models.CharField(max_length=255, blank=True, null=True)
-	published = models.DateTimeField(auto_now_add=True)
+	published = models.DateTimeField(auto_now=True)
 	views = models.IntegerField(default=0)
-	internal_path = models.CharField(max_length=255)
-	web_path = models.CharField(max_length=255)
 	
 #	TODO: propagate saves to Stream model
 #	def save(self, *args, **kwargs):

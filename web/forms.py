@@ -22,6 +22,17 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
 	email = forms.EmailField()
 	password = forms.CharField(max_length=128, widget=forms.PasswordInput)
+
+
+class PhotoForm(forms.Form):
+	days = []
+	for i in range(1, 31):
+		days.append((i, i))
+	
+	day = forms.ChoiceField(choices = days)
+	photo = forms.ImageField()
+	caption = forms.CharField(max_length=255, required=False, help_text="(optional)")
+	
 	
 
 class UserForm(forms.Form):

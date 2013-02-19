@@ -35,8 +35,8 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/Users/sam/Source/workspace/novembeard/media/'
-#MEDIA_ROOT = '%s/media/' % os.path.dirname(__file__)
+#MEDIA_ROOT = '/Users/sam/Source/workspace/novembeard/media/'
+MEDIA_ROOT = '%s/media/' % os.path.dirname(__file__)
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -47,8 +47,8 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/Users/sam/Source/workspace/novembeard/static/'
-#STATIC_ROOT = '%s/static/' % os.path.dirname(__file__)
+#STATIC_ROOT = '/Users/sam/Source/workspace/novembeard/static/'
+STATIC_ROOT = '%s/static/' % os.path.dirname(__file__)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -156,5 +156,10 @@ LOGGING = {
 }
 
 GA_ACCOUNT = None
+
+IMAGE_SIZES = {
+	'thumb': (140, 140),
+	'web': (720, 440),
+}
 
 from localsettings import *
