@@ -4,15 +4,19 @@
 <b>Welcome to Novembeard 2011!</b><br />
 Over the course of the coming month of November, several brave souls will forgo social norms and facial comfort in an effort to exhibit their inner grizzliness.<br />
 Watch here for daily updates, beard ratings, and demeaning commentary{% if not user.is_authenticated %} - or better yet <a href="/register/">register and join them</a>{% endif %}!<br /><br />
-
+<b>[News - Day 14]</b><br />
+Profiles are up - see all your photos in one place! Bio section coming soon...<br /><br />
+<b>Beardroll</b>:<br />
+{% for profile in profiles %}{% if not forloop.first %}, {% endif %}<a href="/profile/{{ profile.user.id }}">{{ profile.nickname }}</a>{% endfor %}<br /><br />
+<b>Recent beard updates</b>:<br /><br />
 <table>
 {% for photo in photos %}
 <tr>
 	<td>
-		<a href="/profile/{{ photo.user.id }}/day/{{ photo.day }}/"><img src="/media/beards/thumb/{{ photo.user.id }}_{{ photo.day }}.jpg" alt="" border="0" /></a>
+		<a href="/profile/{{ photo.user.id }}/day/{{ photo.day }}/"><img src="/media/beards/thumb/{{ photo.user.id }}_{{ photo.day }}.jpg" alt="Day {{ photo.day }}" border="0" /></a>
 	</td>
 	<td>
-		{{ photo.user.profile.nickname }} on day {{ photo.day }} - <i>{{ photo.published }}</i>
+		<a href="/profile/{{ photo.user.id }}/">{{ photo.user.profile.nickname }}</a> on day {{ photo.day }} - <i>{{ photo.published }}</i>
 	</td>
 </tr> 
 {% endfor %}

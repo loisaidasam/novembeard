@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
+#from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,8 +15,13 @@ urlpatterns = patterns('',
 	# Uncomment the admin/doc line below to enable admin documentation:
 	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	
-	# Favicon
-	url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),
+	# favicon.ico
+	url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/icons/favicon.ico'}),
+#    (r'^favicon\.ico$', direct_to_template, {'template': '/static/icons/favicon.ico', 'mimetype': 'image/vnd.microsoft.icon'}),
+	
+	# robots.txt
+	url(r'^robots\.txt$', 'django.views.generic.simple.redirect_to', {'url': '/static/robots.txt'}),
+#    (r'^robots\.txt$', direct_to_template, {'template': '/static/robots.txt', 'mimetype': 'text/plain'}),
 
 	# Uncomment the next line to enable the admin:
 	url(r'^admin/', include(admin.site.urls)),

@@ -1,5 +1,8 @@
 import datetime
 from PIL import Image
+import logging
+
+logger = logging.getLogger(__name__)
 
 from django.conf import settings
 from django.contrib.auth import authenticate
@@ -24,7 +27,9 @@ def index(request):
 	if user.is_authenticated():
 		c['profile'] = user.get_profile()
 	
-	c['photos'] = Photo.objects.all().order_by('-published')[:10] 
+	c['photos'] = Photo.objects.all().order_by('-published')[:10]
+	
+	c['profiles'] = Profile.objects.all() 
 	
 	return render_to_response('index.html', c)
 
@@ -49,7 +54,7 @@ def register(request):
 			profile.save()
 			
 #			user = authenticate(username=email, password=password)
-			auth_login(request, user)
+#			auth_login(request, user)
 			return redirect('index')
 	else:
 		form = RegisterForm() # An unbound form
@@ -125,12 +130,15 @@ def profile_edit(request):
 	return render_to_response('profile_edit.html', c)
 
 
-@login_required
 def profile_view(request, profile_id):
+	view_profile = Profile.objects.get(pk = profile_id)
+	
 	user = request.user
 	c = {
 		'user': user,
 		'ga_account': settings.GA_ACCOUNT,
+		'view_profile': view_profile,
+		'photos': view_profile.user.photo_set.all().order_by("-day"),
 	}
 	
 	if user.is_authenticated():
@@ -139,7 +147,6 @@ def profile_view(request, profile_id):
 	return render_to_response('profile_view.html', c)
 
 
-@login_required
 def photo_view(request, profile_id, day):
 	user = request.user
 	c = {
@@ -178,7 +185,7 @@ def handle_uploaded_file(f, user_id, day):
 	if f.content_type not in accepted:
 		raise Exception("Invalid content type - only jpg files are accepted for uploading at this time")
 	
-	filename = 'media/beards/hi-res/%s_%s.jpg' % (user_id, day)
+	filename = '%s/beards/hi-res/%s_%s.jpg' % (settings.MEDIA_ROOT, user_id, day)
 	destination = open(filename, 'wb+')
 	for chunk in f.chunks():
 		destination.write(chunk)
@@ -187,7 +194,7 @@ def handle_uploaded_file(f, user_id, day):
 	for folder, size in settings.IMAGE_SIZES.iteritems():
 		im = Image.open(filename)
 		im.thumbnail(size, Image.ANTIALIAS)
-		im.save('media/beards/%s/%s_%s.jpg' % (folder, user_id, day))
+		im.save('%s/beards/%s/%s_%s.jpg' % (settings.MEDIA_ROOT, folder, user_id, day))
 
 
 @login_required
@@ -221,9 +228,7 @@ def photo_add(request):
 				
 				return HttpResponseRedirect('/profile/%s/day/%s/' % (user.id, day))
 			except Exception, e:
-				# TODO: report photo uploading problem
-				print "Exception: %s" % e
-				pass
+				logger.error("Exception when uploading a picture: %s" % e)
 	else:
 		today = datetime.date.today()
 		form = PhotoForm(initial={'day': today.day})
