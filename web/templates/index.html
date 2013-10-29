@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<b>Welcome to Novembeard 2011!</b><br />
+<b>Welcome to Novembeard 2013!</b><br />
 Over the course of the coming month of November, several brave souls will forgo social norms and facial comfort in an effort to exhibit their inner grizzliness.<br />
 Watch here for daily updates, beard ratings, and demeaning commentary{% if not user.is_authenticated %} - or better yet <a href="/register/">register and join them</a>{% endif %}!<br /><br />
-<b>[News - Day 14]</b><br />
-Profiles are up - see all your photos in one place! Bio section coming soon...<br /><br />
+<!-- <b>[News - Day 14]</b><br />
+Profiles are up - see all your photos in one place! Bio section coming soon...<br /><br /> -->
 <b>Beardroll</b>:<br />
 {% for profile in profiles %}{% if not forloop.first %}, {% endif %}<a href="/profile/{{ profile.user.id }}">{{ profile.nickname }}</a>{% endfor %}<br /><br />
 <b>Recent beard updates</b>:<br /><br />

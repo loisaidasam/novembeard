@@ -16,11 +16,11 @@ urlpatterns = patterns('',
 	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	
 	# favicon.ico
-	url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/icons/favicon.ico'}),
+	# url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/icons/favicon.ico'}),
 #    (r'^favicon\.ico$', direct_to_template, {'template': '/static/icons/favicon.ico', 'mimetype': 'image/vnd.microsoft.icon'}),
 	
 	# robots.txt
-	url(r'^robots\.txt$', 'django.views.generic.simple.redirect_to', {'url': '/static/robots.txt'}),
+	# url(r'^robots\.txt$', 'django.views.generic.simple.redirect_to', {'url': '/static/robots.txt'}),
 #    (r'^robots\.txt$', direct_to_template, {'template': '/static/robots.txt', 'mimetype': 'text/plain'}),
 
 	# Uncomment the next line to enable the admin:

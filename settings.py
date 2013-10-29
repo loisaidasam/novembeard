@@ -17,7 +17,8 @@ MANAGERS = ADMINS
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'Europe/Ljubljana'
+#TIME_ZONE = 'Europe/Ljubljana'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -136,27 +137,56 @@ AUTH_PROFILE_MODULE = 'web.Profile'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
-	'version': 1,
-	'disable_existing_loggers': False,
-	'handlers': {
-		'mail_admins': {
-			'level': 'ERROR',
-			'class': 'django.utils.log.AdminEmailHandler'
-		}
-	},
-	'loggers': {
-		'django.request': {
-			'handlers': ['mail_admins'],
-			'level': 'ERROR',
-			'propagate': True,
-		},
-	}
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        # 'special': {
+        #     '()': 'project.logging.SpecialFilter',
+        #     'foo': 'bar',
+        # }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console':{
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': [] #'special']
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['null'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        # 'myproject.custom': {
+        #     'handlers': ['console', 'mail_admins'],
+        #     'level': 'INFO',
+        #     'filters': ['special']
+        # }
+    }
 }
 
 GA_ACCOUNT = None
@@ -170,3 +200,4 @@ BLOCKED_IPS = []
 
 
 from localsettings import *
+
