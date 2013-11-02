@@ -30,7 +30,7 @@ def index(request):
 	c['photos'] = Photo.objects.all().order_by('-published')[:10]
 	
 	c['profiles'] = Profile.objects.all() 
-	
+
 	return render_to_response('index.html', c)
 
 
@@ -52,6 +52,8 @@ def register(request):
 			
 			profile = Profile(user=user, nickname=nickname)
 			profile.save()
+
+                        logger.info("New registration from %s/%s!", nickname, email)
 			
 #			user = authenticate(username=email, password=password)
 #			auth_login(request, user)

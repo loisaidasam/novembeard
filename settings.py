@@ -34,10 +34,12 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+SITE_ROOT = os.path.dirname(__file__)
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 #MEDIA_ROOT = '/Users/sam/Source/workspace/novembeard/media/'
-MEDIA_ROOT = '%s/media/' % os.path.dirname(__file__)
+MEDIA_ROOT = '%s/media/' % SITE_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -49,7 +51,7 @@ MEDIA_URL = '/media/'
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = '/Users/sam/Source/workspace/novembeard/static/'
-STATIC_ROOT = '%s/static/' % os.path.dirname(__file__)
+STATIC_ROOT = '%s/static/' % SITE_ROOT
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -114,7 +116,7 @@ TEMPLATE_DIRS = (
 	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
-	'%s/templates' % os.path.dirname(__file__)
+	'%s/templates' % SITE_ROOT
 )
 
 INSTALLED_APPS = (
@@ -144,6 +146,9 @@ LOGGING = {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
+        'standard': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
         'simple': {
             'format': '%(levelname)s %(message)s'
         },
@@ -159,26 +164,39 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.NullHandler',
         },
-        'console':{
+        'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
+	'logfile': {
+	    'level': 'INFO',
+	    'class': 'logging.handlers.RotatingFileHandler',
+	    'filename': SITE_ROOT + '/logs/novembeard.log',
+	    'maxBytes': 50000,
+	    'backupCount': 2,
+	    'formatter': 'standard',
+	},
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
             'filters': [] #'special']
         }
     },
     'loggers': {
+        '': {
+	    'handlers': ['console', 'logfile'],
+	    'level': 'INFO',
+        },
         'django': {
             'handlers': ['null'],
             'propagate': True,
             'level': 'INFO',
         },
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['logfile', 'mail_admins'],
+            'level': 'INFO',
             'propagate': False,
         },
         # 'myproject.custom': {
