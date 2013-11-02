@@ -46,7 +46,7 @@ def register(request):
 			email = form.cleaned_data.get('email')
 			password = form.cleaned_data.get('password')
 			
-			user = User(email=email, username=email)
+			user = User(email=email, username=email[:30])
 			user.set_password(password)
 			user.save()
 			
