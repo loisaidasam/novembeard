@@ -133,7 +133,10 @@ def profile_edit(request):
 
 
 def profile_view(request, profile_id):
-	view_profile = Profile.objects.get(pk = profile_id)
+	try:
+		view_profile = Profile.objects.get(pk = profile_id)
+	except Profile.DoesNotExist:
+		return redirect('index')
 	
 	user = request.user
 	c = {
